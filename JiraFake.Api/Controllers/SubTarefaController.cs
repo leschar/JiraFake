@@ -14,12 +14,13 @@ namespace JiraFake.Api.Controllers
     {
         private readonly ISubTarefaRepository _repository;
         private readonly IMediatorHandler _mediator;
-        private readonly ILogger _logger;
+        private readonly ILogger<SubTarefaController> _logger;
 
-        public SubTarefaController(ISubTarefaRepository repository, IMediatorHandler mediatorHandler)
+        public SubTarefaController(ISubTarefaRepository repository, IMediatorHandler mediatorHandler, ILogger<SubTarefaController> logger)
         {
             _repository = repository;
             _mediator = mediatorHandler;
+            _logger = logger;
         }
         // GET: api/<SubTarefa>        
         [HttpGet]
