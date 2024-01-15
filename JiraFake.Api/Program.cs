@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using JiraFake.Application.Worker;
 using JiraFake.Data.Context;
 using JiraFake.Data.Repositories.Models;
 using JiraFake.Domain.AppSettings;
@@ -9,6 +10,7 @@ using JiraFake.Domain.Communications.RabbitMq;
 using JiraFake.Domain.Events.Models.SubTarefa;
 using JiraFake.Domain.Events.Models.Tarefa;
 using JiraFake.Domain.Interfaces.Models;
+using JiraFake.Domain.Interfaces.Rabbit;
 using JiraFake.Domain.Mediator;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -44,9 +46,18 @@ builder.Services.AddScoped<ISubTarefaRepository, SubTarefaRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMqSettings"));
 builder.Services.AddScoped(typeof(RabbitMqSender<>));
 
+builder.Services.AddTransient<RabbitMqSender<AdicionarTarefaEvent>>();
+builder.Services.AddTransient<RabbitMqSender<AdicionarSubTarefaEvent>>();
+
+
+builder.Services.AddTransient<IFilaRabbit, TarefaFila>();
+builder.Services.AddTransient<IFilaRabbit, SubTarefaFila>();
+
+builder.Services.AddHostedService<RabbitMqWorker>();
 
 var app = builder.Build();
 

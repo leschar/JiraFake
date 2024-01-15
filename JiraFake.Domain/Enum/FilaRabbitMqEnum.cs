@@ -3,6 +3,7 @@
     public enum FilaRabbitMqEnum
     {
         Tarefa,
-        SubTarefa
+        SubTarefa,
+        None
     }
 }
