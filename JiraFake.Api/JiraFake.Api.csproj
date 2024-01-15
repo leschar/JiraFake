@@ -6,8 +6,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+	
+
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <ProjectReference Include="..\JiraFake.Application\JiraFake.Application.csproj" />
+    <ProjectReference Include="..\JiraFake.Data\JiraFake.Data.csproj" />
+    <ProjectReference Include="..\JiraFake.Domain\JiraFake.Domain.csproj" />
   </ItemGroup>
 
 </Project>
