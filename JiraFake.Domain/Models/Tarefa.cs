@@ -9,6 +9,8 @@ namespace JiraFake.Domain.Models
         {
             Nome = nome;
             Descricao = subNome;
+            DataCadastro = DateTime.Now;
+            Status = Enum.StatusEnum.Aberto;
         }
 
         public string Nome { get; private set; }

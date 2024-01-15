@@ -1,4 +1,5 @@
-﻿using JiraFake.Domain.Messages.Events;
+﻿using JiraFake.Domain.Enum;
+using JiraFake.Domain.Messages.Events;
 
 namespace JiraFake.Domain.DomainObjects
 {
@@ -11,7 +12,7 @@ namespace JiraFake.Domain.DomainObjects
         public Guid Id { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
-        public bool Status { get; set; }
+        public StatusEnum Status { get; set; }
 
 
         private List<Event> _notificacoes;

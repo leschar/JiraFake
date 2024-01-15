@@ -1,13 +1,23 @@
-﻿using MediatR;
+﻿using JiraFake.Domain.Communications.RabbitMq;
+using JiraFake.Domain.Enum;
+using JiraFake.Domain.Utils;
+using MediatR;
 
 namespace JiraFake.Domain.Events.Models.Tarefa
 {
     public class TarefaEventHandler : INotificationHandler<AdicionarTarefaEvent>
     {
-        public Task Handle(AdicionarTarefaEvent notification, CancellationToken cancellationToken)
+        private readonly RabbitMqSender<AdicionarTarefaEvent> _rabbitMqSender;
+
+        public TarefaEventHandler(RabbitMqSender<AdicionarTarefaEvent> rabbitMqSender)
         {
-            //enviar para fila
-            return Task.CompletedTask;
+            _rabbitMqSender = rabbitMqSender;
+        }
+
+        public async Task Handle(AdicionarTarefaEvent notification, CancellationToken cancellationToken)
+        {
+            await _rabbitMqSender.SendMessageAsync(notification, EnumUtils.ObterDescricaoEnum(FilaRabbitMqEnum.Tarefa));
         }
     }
+
 }

@@ -51,8 +51,8 @@ namespace JiraFake.Data.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("nome");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.Property<Guid>("TarefaId")
@@ -97,8 +97,8 @@ namespace JiraFake.Data.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("nome");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.HasKey("Id")

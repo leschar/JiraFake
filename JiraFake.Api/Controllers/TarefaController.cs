@@ -3,6 +3,7 @@ using JiraFake.Application.ViewModels;
 using JiraFake.Domain.Interfaces.Models;
 using JiraFake.Domain.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +17,14 @@ namespace JiraFake.Api.Controllers
         private readonly IMediatorHandler _mediator;
         private readonly ILogger _logger;
 
-        public TarefaController(ITarefaRepository repository, IMediatorHandler mediatorHandler)
+        public TarefaController(ITarefaRepository repository, IMediatorHandler mediatorHandler, ILogger<TarefaController> logger)
         {
             _repository = repository;
             _mediator = mediatorHandler;
+            _logger = logger;
         }
+
+
         // GET: api/<Tarefa>        
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -29,7 +33,7 @@ namespace JiraFake.Api.Controllers
         {
             try
             {
-                var tarefas = await _repository.GetAll();
+                var tarefas = TarefaModelAdapter.ConvertToView(await _repository.GetAll());
                 return Ok(tarefas);
             }
             catch (Exception ex)
@@ -63,13 +67,14 @@ namespace JiraFake.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post([FromBody] AdicionarTarefaViewModel model)
         {
+            _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
             try
             {
                 return CustomResponse(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
             }
             catch (Exception ex)
             {
-                _logger.LogError($"A aplicação gerou um erro: {ex.Message}");
+                _logger.LogError($"A aplicação gerou um erro: {ex.Message} para a mensagem {JsonSerializer.Serialize(model)}");
                 return StatusCode(500, new { mensagem = "Erro interno ao criar tarefa" });
 
             }

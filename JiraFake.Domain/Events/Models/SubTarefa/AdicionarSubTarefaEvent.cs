@@ -1,10 +1,11 @@
-﻿using JiraFake.Domain.Messages.Events;
+﻿using JiraFake.Domain.Enum;
+using JiraFake.Domain.Messages.Events;
 
 namespace JiraFake.Domain.Events.Models.SubTarefa
 {
     public class AdicionarSubTarefaEvent : Event
     {
-        public AdicionarSubTarefaEvent(Guid id, string nome, string descricao, DateTime dataCadastro, bool status)
+        public AdicionarSubTarefaEvent(Guid id, string nome, string descricao, DateTime dataCadastro, StatusEnum status)
         {
             Id = id;
             Nome = nome;
@@ -17,7 +18,7 @@ namespace JiraFake.Domain.Events.Models.SubTarefa
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public bool Status { get; private set; }
+        public StatusEnum Status { get; private set; }
 
     }
 }

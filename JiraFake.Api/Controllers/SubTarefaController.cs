@@ -30,7 +30,7 @@ namespace JiraFake.Api.Controllers
         {
             try
             {
-                var subTarefas = await _repository.GetAll();
+                var subTarefas = SubTarefaModelAdapter.ConvertToView( await _repository.GetAll());
                 return Ok(subTarefas);
             }
             catch (Exception ex)

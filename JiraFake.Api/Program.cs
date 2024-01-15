@@ -1,9 +1,11 @@
 using FluentValidation.Results;
 using JiraFake.Data.Context;
 using JiraFake.Data.Repositories.Models;
+using JiraFake.Domain.AppSettings;
 using JiraFake.Domain.Commands.SubSubTarefa;
 using JiraFake.Domain.Commands.SubTarefa;
 using JiraFake.Domain.Commands.Tarefa;
+using JiraFake.Domain.Communications.RabbitMq;
 using JiraFake.Domain.Events.Models.SubTarefa;
 using JiraFake.Domain.Events.Models.Tarefa;
 using JiraFake.Domain.Interfaces.Models;
@@ -41,6 +43,10 @@ builder.Services.AddScoped<ISubTarefaRepository, SubTarefaRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMqSettings"));
+builder.Services.AddScoped(typeof(RabbitMqSender<>));
+
 
 var app = builder.Build();
 

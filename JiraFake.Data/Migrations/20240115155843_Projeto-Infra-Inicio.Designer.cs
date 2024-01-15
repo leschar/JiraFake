@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JiraFake.Data.Migrations
 {
     [DbContext(typeof(JiraFakeContext))]
-    [Migration("20240115144832_ProjetoInfraInicio")]
+    [Migration("20240115155843_Projeto-Infra-Inicio")]
     partial class ProjetoInfraInicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,8 +53,8 @@ namespace JiraFake.Data.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("nome");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.Property<Guid>("TarefaId")
@@ -99,8 +99,8 @@ namespace JiraFake.Data.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("nome");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.HasKey("Id")

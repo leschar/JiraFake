@@ -1,4 +1,5 @@
 ﻿using JiraFake.Domain.DomainObjects;
+using JiraFake.Domain.Enum;
 
 namespace JiraFake.Domain.Models
 {
@@ -10,6 +11,8 @@ namespace JiraFake.Domain.Models
             Nome = nome;
             Descricao = subNome;
             TarefaId = tarefaId;
+            DataCadastro = DateTime.Now;
+            Status = StatusEnum.Aberto;
         }
 
         public Guid TarefaId { get;private set; }
