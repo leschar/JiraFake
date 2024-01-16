@@ -2,7 +2,7 @@
 {
     public interface IFilaRabbit
     {
-        public abstract void Processar(string message);
+        public abstract void Processar(string mensagem);
     }
     
 }

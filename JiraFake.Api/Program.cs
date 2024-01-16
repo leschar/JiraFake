@@ -7,6 +7,7 @@ using JiraFake.Domain.Commands.SubSubTarefa;
 using JiraFake.Domain.Commands.SubTarefa;
 using JiraFake.Domain.Commands.Tarefa;
 using JiraFake.Domain.Communications.RabbitMq;
+using JiraFake.Domain.Communications.RabbitMq.Patterns.Factory;
 using JiraFake.Domain.Events.Models.SubTarefa;
 using JiraFake.Domain.Events.Models.Tarefa;
 using JiraFake.Domain.Interfaces.Models;
@@ -15,8 +16,8 @@ using JiraFake.Domain.Mediator;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,14 +52,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMqSettings"));
 builder.Services.AddScoped(typeof(RabbitMqSender<>));
-
 builder.Services.AddTransient<RabbitMqSender<AdicionarTarefaEvent>>();
 builder.Services.AddTransient<RabbitMqSender<AdicionarSubTarefaEvent>>();
-
-
 builder.Services.AddTransient<IFilaRabbit, TarefaFila>();
 builder.Services.AddTransient<IFilaRabbit, SubTarefaFila>();
-
+builder.Services.AddTransient<IFilaFactory, FilaFactory>();
 builder.Services.AddHostedService<RabbitMqWorker>();
 
 builder.Services.AddControllers()

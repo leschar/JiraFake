@@ -1,8 +1,5 @@
 ﻿using JiraFake.Domain.AppSettings;
-using JiraFake.Domain.Communications.RabbitMq;
-using JiraFake.Domain.Enum;
-using JiraFake.Domain.Interfaces.Rabbit;
-using JiraFake.Domain.Utils;
+using JiraFake.Domain.Communications.RabbitMq.Patterns.Factory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,13 +13,13 @@ namespace JiraFake.Application.Worker
     {
         private readonly RabbitMqSettings _rabbitMqSettings;
         private readonly ILogger<RabbitMqWorker> _logger;
-        private readonly IFilaRabbit _fila;
+        private readonly IFilaFactory _filaFactory;
 
-        public RabbitMqWorker(IOptions<RabbitMqSettings> rabbitMqSettings, ILogger<RabbitMqWorker> logger, IFilaRabbit fila)
+        public RabbitMqWorker(IOptions<RabbitMqSettings> rabbitMqSettings, ILogger<RabbitMqWorker> logger, IFilaFactory filaFactory)
         {
             _rabbitMqSettings = rabbitMqSettings.Value;
             _logger = logger;
-            _fila = fila;
+            _filaFactory = filaFactory;
         }
 
 
@@ -50,18 +47,8 @@ namespace JiraFake.Application.Worker
 
                         _logger.LogInformation($"Mensagem recebida da fila {filaConfig.Key} com a rota {filaConfig.Value.RoutingKey}: {message}");
 
-                        if (filaConfig.Value.RoutingKey == EnumUtils.ObterDescricaoEnum(FilaRabbitMqEnum.Tarefa))
-                        {
-                            _fila.Processar(message);
-                        }
-                        else if (filaConfig.Value.RoutingKey == EnumUtils.ObterDescricaoEnum(FilaRabbitMqEnum.SubTarefa))
-                        {
-                            _fila.Processar(message);
-                        }
-                        else
-                        {
-                            throw new ArgumentException("Fila não identificada");
-                        }
+                        var fila = _filaFactory.CriarFila(filaConfig.Value.RoutingKey);
+                        fila.Processar(message);
 
                         channel.BasicAck(ea.DeliveryTag, false);
                     };
@@ -71,5 +58,4 @@ namespace JiraFake.Application.Worker
             }
         }
     }
-
 }
