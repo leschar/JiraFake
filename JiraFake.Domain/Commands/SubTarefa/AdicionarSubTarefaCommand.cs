@@ -15,7 +15,12 @@ namespace JiraFake.Domain.Commands.SubTarefa
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public Guid TarefaId { get; set; }
+        public bool TarefaExiste {  get;private set; }
 
+        public void ValidarTarefa(bool valido)
+        {
+            TarefaExiste = valido;
+        }
         public override bool EhValido()
         {
             ValidationResult = new AdicionarSubTarefaValidation().Validate(this);
@@ -40,6 +45,11 @@ namespace JiraFake.Domain.Commands.SubTarefa
              .Cascade(CascadeMode.StopOnFirstFailure)
              .Must(value => string.IsNullOrWhiteSpace(value) || value.Length <= 500)
                  .WithMessage("Descricção deve estar vazio ou ter no máximo 500 caracteres.");
+
+            RuleFor(x => x.TarefaExiste)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Tarefa não existe.");
         }
     }
 }

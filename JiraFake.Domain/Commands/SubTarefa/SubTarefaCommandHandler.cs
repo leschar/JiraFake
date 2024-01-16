@@ -11,17 +11,21 @@ namespace JiraFake.Domain.Commands.SubSubTarefa
                                         IRequestHandler<AdicionarSubTarefaCommand, ValidationResult>
     {
         private readonly ISubTarefaRepository _repository;
-        public SubTarefaCommandHandler(ISubTarefaRepository repository)
+        private readonly ITarefaRepository _repositoryTarefa;
+        public SubTarefaCommandHandler(ISubTarefaRepository repository, ITarefaRepository repositoryTarefa)
         {
             _repository = repository;
+            _repositoryTarefa = repositoryTarefa;
         }
         public async Task<ValidationResult> Handle(AdicionarSubTarefaCommand request, CancellationToken cancellationToken)
         {
+            var existeTarefa = await _repositoryTarefa.GetById(request.TarefaId);
+            request.ValidarTarefa(existeTarefa is not null);
+
             if (!request.EhValido()) return request.ValidationResult;
 
-            //TODO: Validar tarefa existe
-
-            var tarefa = new Domain.Models.SubTarefa(request.Nome, request.Descricao, request.TarefaId);
+            var tarefa = new Models.SubTarefa(request.Nome, request.Descricao, request.TarefaId);
+            
 
             await _repository.Add(tarefa);
 

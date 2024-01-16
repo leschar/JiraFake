@@ -4,6 +4,7 @@ using JiraFake.Domain.Interfaces.Models;
 using JiraFake.Domain.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,7 +35,7 @@ namespace JiraFake.Api.Controllers
             try
             {
                 var tarefas = TarefaModelAdapter.ConvertToView(await _repository.GetAll());
-                return Ok(tarefas);
+                return CustomResponse(tarefas);
             }
             catch (Exception ex)
             {
@@ -51,8 +52,8 @@ namespace JiraFake.Api.Controllers
         {
             try
             {
-                var tarefas = await _repository.GetById(id);
-                return Ok(tarefas);
+                var tarefa = TarefaModelAdapter.ConvertToView(await _repository.GetById(id));
+                return CustomResponse(tarefa);
             }
             catch (Exception ex)
             {
@@ -60,6 +61,28 @@ namespace JiraFake.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensagem = "Erro interno ao obter tarefas" });
             }
         }
+
+        // GET api/<detalhes>/5
+        [HttpGet("detalhes/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Detalhes(Guid id)
+        {
+            try
+            {
+                var tarefa = await _repository.ObterTarefasPorId(id);
+                var tarefasViewModel = TarefaModelAdapter.ConvertListToView(tarefa);
+
+                return CustomResponse(tarefasViewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"A aplicação gerou um erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensagem = "Erro interno ao obter tarefas" });
+            }
+        }
+
+        
 
         // POST api/<Tarefa>
         [HttpPost]
@@ -78,7 +101,6 @@ namespace JiraFake.Api.Controllers
                 return StatusCode(500, new { mensagem = "Erro interno ao criar tarefa" });
 
             }
-
 
         }
     }

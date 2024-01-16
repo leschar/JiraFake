@@ -1,8 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-
 namespace JiraFake.Application.ViewModels
 {
-    public class ResponseSubTarefaViewModel
+    public class ResponseTarefaSubtarefaViewModel
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }
@@ -14,5 +13,8 @@ namespace JiraFake.Application.ViewModels
         public DateTime DataCadastro { get; set; }
         [JsonPropertyName("status")]
         public string Status { get; set; }
+
+        [JsonPropertyName("subTarefa")]
+        public List<ResponseSubTarefaViewModel>? SubTarefas { get; set; }
     }
 }

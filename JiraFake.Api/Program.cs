@@ -15,6 +15,8 @@ using JiraFake.Domain.Mediator;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,15 @@ builder.Services.AddTransient<IFilaRabbit, TarefaFila>();
 builder.Services.AddTransient<IFilaRabbit, SubTarefaFila>();
 
 builder.Services.AddHostedService<RabbitMqWorker>();
+
+builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+            options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        });
 
 var app = builder.Build();
 

@@ -1,6 +1,5 @@
 ﻿using JiraFake.Application.Adapters;
 using JiraFake.Application.ViewModels;
-using JiraFake.Domain.Interfaces.Models;
 using JiraFake.Domain.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,50 +11,13 @@ namespace JiraFake.Api.Controllers
     [ApiController]
     public class SubTarefaController : MainController
     {
-        private readonly ISubTarefaRepository _repository;
         private readonly IMediatorHandler _mediator;
         private readonly ILogger<SubTarefaController> _logger;
 
-        public SubTarefaController(ISubTarefaRepository repository, IMediatorHandler mediatorHandler, ILogger<SubTarefaController> logger)
+        public SubTarefaController(IMediatorHandler mediatorHandler, ILogger<SubTarefaController> logger)
         {
-            _repository = repository;
             _mediator = mediatorHandler;
             _logger = logger;
-        }
-        // GET: api/<SubTarefa>        
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get()
-        {
-            try
-            {
-                var subTarefas = SubTarefaModelAdapter.ConvertToView( await _repository.GetAll());
-                return Ok(subTarefas);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"A aplicação gerou um erro: {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensagem = "Erro interno ao obter subTarefas" });
-            }
-        }
-
-        // GET api/<SubTarefa>/5
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            try
-            {
-                var subTarefas = await _repository.GetById(id);
-                return Ok(subTarefas);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"A aplicação gerou um erro: {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensagem = "Erro interno ao obter Sub Tarefas" });
-            }
         }
 
         // POST api/<SubTarefa>

@@ -28,5 +28,17 @@ namespace JiraFake.Application.Adapters
             }
             return tarefas;
         }
+
+        public static ResponseSubTarefaViewModel ConvertToView(SubTarefa model)
+        {
+            ResponseSubTarefaViewModel response = new();
+            response.Id = model.Id;
+            response.Nome = model.Nome;
+            response.Descricao = model.Descricao;
+            response.DataCadastro = model.DataCadastro;
+            response.Status = EnumUtils.ObterDescricaoEnum(model.Status);
+
+            return response;
+        }
     }
 }

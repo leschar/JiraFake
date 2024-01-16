@@ -3,5 +3,8 @@ using JiraFake.Domain.Models;
 
 namespace JiraFake.Domain.Interfaces.Models
 {
-    public interface ITarefaRepository : IRepository<Tarefa> { }
+    public interface ITarefaRepository : IRepository<Tarefa>
+    {
+        Task<Tarefa> ObterTarefasPorId(Guid id);
+    }
 }
