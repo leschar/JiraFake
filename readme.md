@@ -10,36 +10,36 @@
 ## Estrutura do projeto
 .
 ├── docs
-│   └── readme.md
+│ └── readme.md
 ├── src
-│   ├── Api
-│   │   └── Controllers
-│   ├── Core
-│   │   ├── Application
-│   │   │   ├── Adapters
-│   │   │   ├── ViewModels
-│   │   │   └── Worker
-│   │   └── Domain
-│   │       ├── AppSettings
-│   │       ├── Commands
-│   │       ├── Communications
-│   │       ├── DomainObjects
-│   │       ├── Enum
-│   │       ├── Events
-│   │       ├── Extensions
-│   │       ├── Interfaces
-│   │       ├── Mediator
-│   │       ├── Messages
-│   │       ├── Models
-│   │       └── Utils
-│   └── Infra
-│       └── Data
-│           ├── Context
-│           ├── Extensions
-│           ├── Mappings
-│           └── Repositories
+│ ├── Api
+│ │ └── Controllers
+│ ├── Core
+│ │ ├── Application
+│ │ │ ├── Adapters
+│ │ │ ├── ViewModels
+│ │ │ └── Worker
+│ │ └── Domain
+│ │ ├── AppSettings
+│ │ ├── Commands
+│ │ ├── Communications
+│ │ ├── DomainObjects
+│ │ ├── Enum
+│ │ ├── Events
+│ │ ├── Extensions
+│ │ ├── Interfaces
+│ │ ├── Mediator
+│ │ ├── Messages
+│ │ ├── Models
+│ │ └── Utils
+│ └── Infra
+│ └── Data
+│ ├── Context
+│ ├── Extensions
+│ ├── Mappings
+│ └── Repositories
 └── tests
-    └── Unit
+└── Unit
 
 ## Instruções de instalação
 
