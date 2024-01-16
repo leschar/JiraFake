@@ -26,15 +26,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{953C7FBB-CA9F-46C5-BD6D-84F41552F9A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraFake.Domain", "JiraFake.Domain\JiraFake.Domain.csproj", "{52DC7885-3959-4CBC-A92F-F5827842212A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiraFake.Domain", "JiraFake.Domain\JiraFake.Domain.csproj", "{52DC7885-3959-4CBC-A92F-F5827842212A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraFake.Application", "JiraFake.Application\JiraFake.Application.csproj", "{E12C6560-B4C2-45CD-9615-5B4097C90FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiraFake.Application", "JiraFake.Application\JiraFake.Application.csproj", "{E12C6560-B4C2-45CD-9615-5B4097C90FE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{9D81FECD-C6A3-43D1-960B-BB47BE417686}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraFake.Data", "JiraFake.Data\JiraFake.Data.csproj", "{20B70434-AB87-4DD4-9971-1B4C87851CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiraFake.Data", "JiraFake.Data\JiraFake.Data.csproj", "{20B70434-AB87-4DD4-9971-1B4C87851CB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiraFake.Api", "JiraFake.Api\JiraFake.Api.csproj", "{FEDDE565-7239-4E3E-B501-7205F8B6A74C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiraFake.Api", "JiraFake.Api\JiraFake.Api.csproj", "{FEDDE565-7239-4E3E-B501-7205F8B6A74C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B373CBB-A547-4A57-BEE6-28A4AF9D28F8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

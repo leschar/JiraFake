@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["JiraFake.Api/JiraFake.Api.csproj", "JiraFake.Api/"]
+COPY ["./JiraFake.Api/JiraFake.Api.csproj", "JiraFake.Api/"]
 COPY ["JiraFake.Application/JiraFake.Application.csproj", "JiraFake.Application/"]
 COPY ["JiraFake.Domain/JiraFake.Domain.csproj", "JiraFake.Domain/"]
 COPY ["JiraFake.Data/JiraFake.Data.csproj", "JiraFake.Data/"]
