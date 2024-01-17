@@ -1,0 +1,19 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #2f00ff !important;color: #ffffff !important;" >
+  <div class="container">
+    <a class="navbar-brand" style="color: #ffffff !important;" [routerLink]="['/home']">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="navbarResponsive">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" style="color: #ffffff !important;" [routerLink]="['/tarefa']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Tarefas</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- FIM Navigation -->

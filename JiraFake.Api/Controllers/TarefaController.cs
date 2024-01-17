@@ -34,7 +34,10 @@ namespace JiraFake.Api.Controllers
         {
             try
             {
-                var tarefas = TarefaModelAdapter.ConvertToView(await _repository.GetAll());
+                var tarefas = TarefaModelAdapter.ConvertToView(await _repository.GetAll())
+                    .OrderByDescending(d=>d.DataCadastro)
+                    .ThenBy(n=>n.Nome);
+
                 return CustomResponse(tarefas);
             }
             catch (Exception ex)

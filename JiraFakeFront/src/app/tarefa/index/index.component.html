@@ -1,0 +1,28 @@
+<div class="container" style="margin-top: 100px;">
+    <h1 class="text-center">Controle de Tarefas</h1>
+    <a href="#" routerLink="/tarefa/nova-tarefa/" class="btn btn-success">Novo</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Descricao</th>
+                <th>Status</th>
+                <th>Data Cadastro</th>
+                <th width="250px">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tarefa of tarefas">
+                <td>{{tarefa.id}}</td>
+                <td>{{tarefa.nome}}</td>
+                <td>{{tarefa.descricao}}</td>
+                <td>{{tarefa.status}}</td>
+                <td>{{tarefa.dataCadastro}}</td>
+                <td>
+                    <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'detalhes']" class="btn btn-primary">Detalhes</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

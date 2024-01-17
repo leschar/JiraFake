@@ -1,0 +1,40 @@
+<div class="container" *ngIf="tarefa" style="margin-top: 100px;">
+  <h1 class="text-center">Detalhes da Tarefa</h1>
+  
+  <div class="mb-3">
+      <a href="#" routerLink="/tarefa/index" class="btn btn-default">Voltar</a>
+  </div>
+
+  <div class="card">
+      <div class="card-body">
+          <h2 class="card-title">Tarefa: {{tarefa.nome}}</h2>
+          <p class="card-text"><strong>Descrição:</strong> {{tarefa.descricao}}</p>
+          <p class="card-text"><strong>Data de Cadastro:</strong> {{tarefa.dataCadastro}}</p>
+          <p class="card-text"><strong>Status:</strong> {{tarefa.status}}</p>
+      </div>
+  </div>
+
+  
+
+  <div class="container mt-4">
+      <h2 class="text-center">Sub Tarefas</h2>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Status</th>
+                  <th>Data de Cadastro</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let subTarefa of tarefa.subTarefa">
+                  <td>{{subTarefa.nome}}</td>
+                  <td>{{subTarefa.descricao}}</td>
+                  <td>{{subTarefa.status}}</td>
+                  <td>{{subTarefa.dataCadastro}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
