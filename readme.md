@@ -1,13 +1,14 @@
 ﻿# Jira Fake
 
 ## Pré-requisitos
+- Angular versão 17
 - Visual Studio com .NET 6 SDK instalado
 - SQL Server
 - Docker para o RabbitMQ (siga os passos abaixo)
   ```bash
   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
 
-## Estrutura do projeto
+## Estrutura do projeto .Net
 .
 ├── docs
 │ └── readme.md
@@ -46,7 +47,7 @@
 Clone o repositório
 git clone https://github.com/leschar/JiraFake
 
-## Execução
+## Execução .Net
 
 Para executar o projeto, siga estas etapas:
 Abra a solução no Visual Studio.
@@ -54,6 +55,15 @@ Configure e inicie o RabbitMQ usando Docker Desktop para Windows.
 Configure o SQL Server e execute as migrações.
 Alterar as connectionsstrings no arquivo appsetings se necessário passando os dados da maquina.
 Execute o projeto.
+
+## Execução .Angular
+
+Para executar o projeto, siga estas etapas:
+Abra a pasta do projeto localize JiraFakeFront abra o console "cmd" nesta pasta e digite code .
+Configure e inicie o RabbitMQ usando Docker Desktop para Windows.
+Abra o terminao (Ctrl + ') digite npm i
+Após atualização digite ng s --o
+Projeto em execução
 
 ## Testes
 Em desenvolvimento
