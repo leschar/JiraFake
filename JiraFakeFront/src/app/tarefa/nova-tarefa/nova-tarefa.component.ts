@@ -33,7 +33,6 @@ export class NovaTarefaComponent {
   }
 
   submit() {
-    console.log(this.form.value);
     this.postService.create(this.form.value).subscribe((res: any) => {
       alert('Tarefa criada com sucesso!');
       this.router.navigateByUrl('tarefa/index');

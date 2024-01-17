@@ -25,6 +25,7 @@ import { NovaTarefaComponent } from './tarefa/nova-tarefa/nova-tarefa.component'
     NovaTarefaComponent,
   ],
   templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'Teste lista de tarefas';

@@ -13,4 +13,5 @@ export interface SubTarefa {
   descricao: string;
   status: string;
   dataCadastro: Date;
+  tarefaId: string;
 }
