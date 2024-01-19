@@ -29,6 +29,10 @@ namespace JiraFake.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("ativo");
+
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime2")
                         .HasColumnName("data_atualizacao");
@@ -74,6 +78,10 @@ namespace JiraFake.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("ativo");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime2")

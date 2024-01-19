@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JiraFake.Data.Migrations
 {
-    public partial class ProjetoInfraInicio : Migration
+    public partial class Inicio : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace JiraFake.Data.Migrations
                     descricao = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     data_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     data_atualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    status = table.Column<int>(type: "int", nullable: false)
+                    status = table.Column<int>(type: "int", nullable: false),
+                    ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +36,8 @@ namespace JiraFake.Data.Migrations
                     descricao = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     data_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     data_atualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    status = table.Column<int>(type: "int", nullable: false)
+                    status = table.Column<int>(type: "int", nullable: false),
+                    ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

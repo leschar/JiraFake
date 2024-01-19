@@ -1,7 +1,9 @@
 ﻿using JiraFake.Application.ViewModels;
 using JiraFake.Domain.Commands.Tarefa;
+using JiraFake.Domain.Enum;
 using JiraFake.Domain.Models;
 using JiraFake.Domain.Utils;
+using System.Linq;
 
 namespace JiraFake.Application.Adapters
 {
@@ -12,21 +14,27 @@ namespace JiraFake.Application.Adapters
             return new AdicionarTarefaCommand(model.Nome, model.Descricao);
         }
 
-        public static ResponseTarefaViewModel ConvertToView(Tarefa model)
+        public static EditarTarefaCommand ConvertToDomain(EditarTarefaViewModel model)
         {
-                ResponseTarefaViewModel response = new();
-                response.Id = model.Id;
-                response.Nome = model.Nome;
-                response.Descricao = model.Descricao;
-                response.DataCadastro = model.DataCadastro;
-                response.Status = EnumUtils.ObterDescricaoEnum(model.Status);
+            return new EditarTarefaCommand(model.Id, model.Nome, model.Descricao, (StatusEnum)model.Status);
+        }
+
+        public static ResponseTarefaViewModel? ConvertToView(Tarefa model)
+        {
+            ResponseTarefaViewModel response = new();
+            if (model is null) return null;
+
+            response.Id = model.Id;
+            response.Nome = model.Nome;
+            response.Descricao = model.Descricao;
+            response.DataCadastro = model.DataCadastro;
+            response.Status = EnumUtils.ObterDescricaoEnum(model.Status);
 
             return response;
         }
         public static IEnumerable<ResponseTarefaViewModel> ConvertToView(IEnumerable<Tarefa> model)
         {
             var tarefas = new List<ResponseTarefaViewModel>();
-
             foreach (Tarefa tarefa in model)
             {
                 ResponseTarefaViewModel response = new();
@@ -40,18 +48,17 @@ namespace JiraFake.Application.Adapters
             return tarefas;
         }
 
-        public static ResponseTarefaSubtarefaViewModel ConvertListToView(Tarefa model)
+        public static ResponseTarefaSubtarefaViewModel? ConvertListToView(Tarefa model)
         {
-            var tarefas = new ResponseTarefaSubtarefaViewModel
-            {
-                Id = model.Id,
-                Nome = model.Nome,
-                Descricao = model.Descricao,
-                DataCadastro = model.DataCadastro,
-                Status = EnumUtils.ObterDescricaoEnum(model.Status),
+            ResponseTarefaSubtarefaViewModel tarefas = new();
+            if (model is null) return null;
+            tarefas.Id = model.Id;
+            tarefas.Nome = model.Nome;
+            tarefas.Descricao = model.Descricao;
+            tarefas.DataCadastro = model.DataCadastro;
+            tarefas.Status = EnumUtils.ObterDescricaoEnum(model.Status);
 
-                SubTarefas = model.SubTarefas?.Select(SubTarefaModelAdapter.ConvertToView).ToList()
-            };
+            tarefas.SubTarefas = model.SubTarefas?.Select(SubTarefaModelAdapter.ConvertToView).ToList();
 
             return tarefas;
         }

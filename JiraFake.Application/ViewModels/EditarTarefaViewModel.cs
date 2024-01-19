@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JiraFake.Domain.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace JiraFake.Application.ViewModels
 {
-    public class AdicionarSubTarefaViewModel
+    public class EditarTarefaViewModel
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "Nome não pode ser nulo.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "O Nome deve ter entre 2 e 50 caracteres.")]
 
@@ -11,7 +15,8 @@ namespace JiraFake.Application.ViewModels
 
         [StringLength(500, MinimumLength = 0, ErrorMessage = "O {0} deve ter entre {2} e {1} caracteres.")]
         public string Descricao { get; set; }
-        [Required]
-        public Guid TarefaId { get; set; }
+
+        [EnumDataType(typeof(StatusEnum), ErrorMessage = "O campo Status deve ter um valor válido do enum StatusEnum.")]
+        public StatusEnum Status { get; set; }
     }
 }

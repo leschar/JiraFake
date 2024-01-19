@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JiraFake.Data.Migrations
 {
     [DbContext(typeof(JiraFakeContext))]
-    [Migration("20240115155843_Projeto-Infra-Inicio")]
-    partial class ProjetoInfraInicio
+    [Migration("20240118191816_Inicio")]
+    partial class Inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,10 @@ namespace JiraFake.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("ativo");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime2")
@@ -76,6 +80,10 @@ namespace JiraFake.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("ativo");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime2")

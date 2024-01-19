@@ -1,10 +1,11 @@
 ﻿using JiraFake.Application.Adapters;
 using JiraFake.Application.ViewModels;
+using JiraFake.Domain.Commands.Tarefa;
 using JiraFake.Domain.Interfaces.Models;
 using JiraFake.Domain.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,8 +36,8 @@ namespace JiraFake.Api.Controllers
             try
             {
                 var tarefas = TarefaModelAdapter.ConvertToView(await _repository.GetAll())
-                    .OrderByDescending(d=>d.DataCadastro)
-                    .ThenBy(n=>n.Nome);
+                    .OrderByDescending(d => d.DataCadastro)
+                    .ThenBy(n => n.Nome);
 
                 return CustomResponse(tarefas);
             }
@@ -50,13 +51,13 @@ namespace JiraFake.Api.Controllers
         // GET api/<Tarefa>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                var tarefa = TarefaModelAdapter.ConvertToView(await _repository.GetById(id));
-                return CustomResponse(tarefa);
+                return CustomResponse(TarefaModelAdapter.ConvertToView(await _repository.GetById(id)));
             }
             catch (Exception ex)
             {
@@ -68,15 +69,13 @@ namespace JiraFake.Api.Controllers
         // GET api/<detalhes>/5
         [HttpGet("detalhes/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Detalhes(Guid id)
         {
             try
             {
-                var tarefa = await _repository.ObterTarefasPorId(id);
-                var tarefasViewModel = TarefaModelAdapter.ConvertListToView(tarefa);
-
-                return CustomResponse(tarefasViewModel);
+                return CustomResponse(TarefaModelAdapter.ConvertListToView(await _repository.ObterTarefasPorId(id)));
             }
             catch (Exception ex)
             {
@@ -85,7 +84,7 @@ namespace JiraFake.Api.Controllers
             }
         }
 
-        
+
 
         // POST api/<Tarefa>
         [HttpPost]
@@ -96,7 +95,28 @@ namespace JiraFake.Api.Controllers
             _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
             try
             {
-                return CustomResponse(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
+                await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model));
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"A aplicação gerou um erro: {ex.Message} para a mensagem {JsonSerializer.Serialize(model)}");
+                return StatusCode(500, new { mensagem = "Erro interno ao criar tarefa" });
+            }
+
+        }
+
+        // PUT api/<Tarefa>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Valores que representam o status,  Fechado = 0,\r\n        Aberto = 1,\r\n        ParaFazer = 2,\r\n        EmProgresso = 3,\r\n        EmTestes = 4,\r\n        TestesFinalizados = 5,\r\n        Concluido = 6 ")]
+        public async Task<IActionResult> Put([FromBody] EditarTarefaViewModel model)
+        {
+            _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
+            try
+            {
+                return Ok(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
             }
             catch (Exception ex)
             {
@@ -105,6 +125,25 @@ namespace JiraFake.Api.Controllers
 
             }
 
+        }
+
+        // Delete api/<Tarefa>/5
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                var command = new RemoverTarefaCommand(id);
+                return CustomResponse(await _mediator.EnviarComando(command));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"A aplicação gerou um erro para remover: {ex.Message} para o id:  {id}");
+                return StatusCode(500, new { mensagem = "Erro interno ao criar tarefa" });
+
+            }
         }
     }
 }

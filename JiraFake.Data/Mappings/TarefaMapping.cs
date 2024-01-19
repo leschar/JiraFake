@@ -18,6 +18,9 @@ namespace JiraFake.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(500)");
 
+            //builder.Property(c => c.Ativo)
+            //    .HasDefaultValueSql("CONVERT(BIT, 1)");
+
 
             builder.ToTable("Tarefas");
 

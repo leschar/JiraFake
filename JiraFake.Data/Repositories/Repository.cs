@@ -23,12 +23,12 @@ namespace JiraFake.Data.Repositories
 
         public async Task<TEntity> GetById(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Ativo);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.Where(x=>x.Ativo).ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)

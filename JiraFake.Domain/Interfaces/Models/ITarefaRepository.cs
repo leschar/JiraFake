@@ -6,5 +6,6 @@ namespace JiraFake.Domain.Interfaces.Models
     public interface ITarefaRepository : IRepository<Tarefa>
     {
         Task<Tarefa> ObterTarefasPorId(Guid id);
+        Task DesativarTarefa(Guid id);
     }
 }

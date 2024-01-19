@@ -13,7 +13,14 @@ namespace JiraFake.Data.Repositories.Models
         {
             return await _context.Tarefas
                 .Include(x => x.SubTarefas)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .FirstOrDefaultAsync(t => t.Id == id && t.Ativo);
+        }
+
+        public async Task DesativarTarefa(Guid id)
+        {
+            var tarefa = await _context.Tarefas.FindAsync(id);
+            tarefa.Ativo = false;
+            _context.Tarefas.Update(tarefa);
         }
     }
 }

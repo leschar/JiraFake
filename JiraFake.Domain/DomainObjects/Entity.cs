@@ -1,5 +1,6 @@
 ﻿using JiraFake.Domain.Enum;
 using JiraFake.Domain.Messages.Events;
+using System.ComponentModel;
 
 namespace JiraFake.Domain.DomainObjects
 {
@@ -13,6 +14,8 @@ namespace JiraFake.Domain.DomainObjects
         public DateTime DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public StatusEnum Status { get; set; }
+        [DefaultValue(true)]
+        public bool Ativo { get; set; }
 
 
         private List<Event> _notificacoes;

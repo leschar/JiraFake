@@ -15,6 +15,7 @@ using JiraFake.Domain.Interfaces.Rabbit;
 using JiraFake.Domain.Mediator;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -36,10 +37,16 @@ builder.Services.AddDbContext<JiraFakeContext>(options =>
 });
 
 builder.Services.AddScoped<IRequestHandler<AdicionarTarefaCommand, ValidationResult>, TarefaCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<EditarTarefaCommand, ValidationResult>, TarefaCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<RemoverTarefaCommand, ValidationResult>, TarefaCommandHandler>();
+
 builder.Services.AddScoped<IRequestHandler<AdicionarSubTarefaCommand, ValidationResult>, SubTarefaCommandHandler>();
 
 
 builder.Services.AddScoped<INotificationHandler<AdicionarTarefaEvent>, TarefaEventHandler>();
+builder.Services.AddScoped<INotificationHandler<EditarTarefaEvent>, TarefaEventHandler>();
+builder.Services.AddScoped<INotificationHandler<RemoverTarefaEvent>, TarefaEventHandler>();
+
 builder.Services.AddScoped<INotificationHandler<AdicionarSubTarefaEvent>, SubTarefaEventHandler>();
 
 builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
@@ -47,13 +54,28 @@ builder.Services.AddScoped<ISubTarefaRepository, SubTarefaRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API Fake Jira",
+        Description = "Exemplo de como fornecer a documentação para APIs.",
+        Contact = new OpenApiContact() { Name = "Charles", Email = "fake@fake.com" },
+        License = new OpenApiLicense() { Name = "MIT License", Url = new Uri("https://opensource.org/licenses/MIT") }
+    });
+});
 
 
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMqSettings"));
 builder.Services.AddScoped(typeof(RabbitMqSender<>));
+
 builder.Services.AddTransient<RabbitMqSender<AdicionarTarefaEvent>>();
+builder.Services.AddTransient<RabbitMqSender<EditarTarefaEvent>>();
+builder.Services.AddTransient<RabbitMqSender<RemoverTarefaEvent>>();
+
 builder.Services.AddTransient<RabbitMqSender<AdicionarSubTarefaEvent>>();
+
 builder.Services.AddTransient<IFilaRabbit, TarefaFila>();
 builder.Services.AddTransient<IFilaRabbit, SubTarefaFila>();
 builder.Services.AddTransient<IFilaFactory, FilaFactory>();
