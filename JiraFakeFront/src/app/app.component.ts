@@ -8,6 +8,11 @@ import { FooterComponent } from './navegacao/footer/footer.component';
 import { MenuComponent } from './navegacao/menu/menu.component';
 import { IndexComponent } from './tarefa/index/index.component';
 import { NovaTarefaComponent } from './tarefa/nova-tarefa/nova-tarefa.component';
+import { NovaSubTarefaComponent } from './subtarefa/nova-sub-tarefa/nova-sub-tarefa.component';
+import { EditarTarefaComponent } from './tarefa/editar-tarefa/editar-tarefa.component';
+import { RemoverTarefaComponent } from './tarefa/remover-tarefa/remover-tarefa.component';
+import { EditarSubTarefaComponent } from './subtarefa/editar-sub-tarefa/editar-sub-tarefa.component';
+import { RemoverSubTarefaComponent } from './subtarefa/remover-sub-tarefa/remover-sub-tarefa.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +27,11 @@ import { NovaTarefaComponent } from './tarefa/nova-tarefa/nova-tarefa.component'
     FooterComponent,
     IndexComponent,
     NovaTarefaComponent,
-    NovaTarefaComponent,
+    EditarTarefaComponent,
+    RemoverTarefaComponent,
+    NovaSubTarefaComponent,
+    EditarSubTarefaComponent,
+    RemoverSubTarefaComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

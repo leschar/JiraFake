@@ -1,13 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Garante que o corpo tenha pelo menos 100% da altura da janela de visualização */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
   .main-content {
-    flex: 1; /* Faz com que o conteúdo principal ocupe o espaço restante */
+    flex: 1;
   }
   
   .footer {

@@ -46,8 +46,7 @@ export class NovaSubTarefaComponent {
   }
 
   submit() {
-    debugger;
-    console.log(this.form.value);
+    console.log('----------', this.form.value);
     this.postService.create(this.form.value).subscribe((res: any) => {
       alert('Sub Tarefa criada com sucesso!');
     });

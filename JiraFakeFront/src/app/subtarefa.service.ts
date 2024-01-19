@@ -21,9 +21,30 @@ export class SubTarefaService {
 
   //create
   create(post: SubTarefa): Observable<any> {
-    console.log('-----------------------', JSON.stringify(post));
     return this.httpClient
       .post(this.apiUrl + 'subtarefa/', JSON.stringify(post), this.httpOptions)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  //edit
+  update(put: SubTarefa): Observable<any> {
+    return this.httpClient
+      .put(this.apiUrl + 'subtarefa/', JSON.stringify(put), this.httpOptions)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  //delete
+  delete(id: string, tarefaId: string) {
+    return this.httpClient
+      .delete(this.apiUrl + 'subtarefa?id=' + id + '&tarefaId=' + tarefaId)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return throwError(error);

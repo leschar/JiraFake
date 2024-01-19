@@ -1,0 +1,21 @@
+<div class="container" *ngIf="tarefa" style="margin-top: 100px; margin-bottom: 100px;">
+
+  <h1 class="text-center">Tem certeza que deseja excluir a Tarefa?</h1>
+   
+    <div class="form-group">
+      <input type="hidden"  id="{{id}}"  class="form-control" [(ngModel)]="id" readonly>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+          <h2 class="card-title">Tarefa: {{tarefa.nome}}</h2>
+          <p class="card-text"><strong>Descrição:</strong> {{tarefa.descricao}}</p>
+          <p class="card-text"><strong>Data de Cadastro:</strong> {{tarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</p>
+          <p class="card-text"><strong>Status:</strong> {{tarefa.status}}</p>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button type="button" class="btn btn-danger" (click)="submit()">Excluir</button>
+    </div>
+    
+</div>

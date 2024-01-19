@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TarefaService } from '../../tarefa.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nova-tarefa',
@@ -19,7 +19,11 @@ import { Router, RouterModule } from '@angular/router';
 export class NovaTarefaComponent {
   form!: FormGroup;
 
-  constructor(public postService: TarefaService, private router: Router) {}
+  constructor(
+    public postService: TarefaService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({

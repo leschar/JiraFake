@@ -27,7 +27,14 @@ export class TarefaService {
       })
     );
   }
-
+  //find data
+  find(id: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + 'tarefa/detalhes/' + id).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
+  }
   //create
   create(post: Tarefa): Observable<any> {
     return this.httpClient
@@ -38,10 +45,20 @@ export class TarefaService {
         })
       );
   }
+  //edit
+  update(tarefa: Tarefa): Observable<any> {
+    return this.httpClient
+      .put(this.apiUrl + 'tarefa/', JSON.stringify(tarefa), this.httpOptions)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        })
+      );
+  }
 
-  //find data
-  find(id: string): Observable<any> {
-    return this.httpClient.get(this.apiUrl + 'tarefa/detalhes/' + id).pipe(
+  //delete
+  delete(id: string) {
+    return this.httpClient.delete(this.apiUrl + 'tarefa?id=' + id).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })

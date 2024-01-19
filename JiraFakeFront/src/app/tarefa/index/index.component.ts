@@ -26,7 +26,6 @@ export class IndexComponent {
       .getAll()
       .pipe(
         catchError((error) => {
-          console.error('Erro ao carregar as tarefas:', error);
           if (error.status === 500 || error.status === 404) {
             alert('Tarefa não encontrada');
           } else {
@@ -37,7 +36,6 @@ export class IndexComponent {
       )
       .subscribe((data: Tarefa[]) => {
         this.tarefas = data;
-        console.log(this.tarefas);
       });
   }
 }

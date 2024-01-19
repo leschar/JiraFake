@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
-import { Tarefa } from '../tarefa';
-import { TarefaService } from '../../tarefa.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { catchError, EMPTY } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TarefaService } from '../../tarefa.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Tarefa } from '../tarefa';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
-  selector: 'app-detalhes',
+  selector: 'app-remover-tarefa',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './detalhes.component.html',
-  styleUrls: ['./detalhes.component.css'],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  templateUrl: './remover-tarefa.component.html',
 })
-export class DetalhesComponent {
+export class RemoverTarefaComponent {
   id!: string;
   tarefa!: Tarefa;
+  form!: FormGroup;
 
   constructor(
     public tarefaService: TarefaService,
@@ -39,5 +40,13 @@ export class DetalhesComponent {
       .subscribe((data: Tarefa) => {
         this.tarefa = data;
       });
+  }
+
+  submit() {
+    this.tarefaService.delete(this.id).subscribe((res: any) => {
+      console.log(res);
+      alert('Excluido com sucesso');
+      this.router.navigateByUrl('tarefa/index');
+    });
   }
 }
