@@ -35,9 +35,12 @@ namespace JiraFake.Domain.Commands.Tarefa
             var existeTarefa = await _repository.GetById(request.Id);
             request.ValidarTarefa(existeTarefa is not null);
 
+            //para concluir a tarefa, todas as subtarefas devem estar fechadas ou concluidas
+            //criar campo para informar o motivo da alteração
+
             if (!request.EhValido()) return request.ValidationResult;
 
-            var tarefa = new Models.Tarefa(request.Id,request.Nome, request.Descricao, request.Status);
+            var tarefa = new Models.Tarefa(request.Id, request.Nome, request.Descricao, request.Status);
 
             _repository.Update(tarefa);
 
@@ -49,8 +52,10 @@ namespace JiraFake.Domain.Commands.Tarefa
         {
             var existeTarefa = await _repository.GetById(request.Id);
             request.ValidarTarefa(existeTarefa is not null);
-            //validar se existe sub tarefas ativas
-            var existeSubTarefaAtiva = await _repositorySub.Find(c=>c.Ativo && c.TarefaId == request.Id);
+
+            //criar campo para informar o motivo da exclusao
+
+            var existeSubTarefaAtiva = await _repositorySub.Find(c => c.Ativo && c.TarefaId == request.Id);
             request.ValidarSubTarefaAtiva(existeSubTarefaAtiva.Any());
 
             if (!request.EhValido()) return request.ValidationResult;
@@ -59,7 +64,7 @@ namespace JiraFake.Domain.Commands.Tarefa
 
             await _repository.DesativarTarefa(request.Id);
 
-            tarefa.AdicionarEvento(new RemoverTarefaEvent(tarefa.Id , tarefa.Ativo));
+            tarefa.AdicionarEvento(new RemoverTarefaEvent(tarefa.Id, tarefa.Ativo));
 
             return await PersistirDados(_repository.UnitOfWork);
         }

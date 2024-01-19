@@ -1,5 +1,7 @@
 ﻿using JiraFake.Application.ViewModels;
 using JiraFake.Domain.Commands.SubTarefa;
+using JiraFake.Domain.Commands.Tarefa;
+using JiraFake.Domain.Enum;
 using JiraFake.Domain.Models;
 using JiraFake.Domain.Utils;
 
@@ -12,6 +14,10 @@ namespace JiraFake.Application.Adapters
             return new AdicionarSubTarefaCommand(model.Nome, model.Descricao, model.TarefaId);
         }
 
+        public static EditarSubTarefaCommand ConvertToDomain(EditarSubTarefaViewModel model)
+        {
+            return new EditarSubTarefaCommand(model.Id,model.TarefaId, model.Nome, model.Descricao, model.Status);
+        }
         public static IEnumerable<ResponseSubTarefaViewModel> ConvertToView(IEnumerable<SubTarefa> model)
         {
             var tarefas = new List<ResponseSubTarefaViewModel>();

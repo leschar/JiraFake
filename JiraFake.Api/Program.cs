@@ -41,6 +41,8 @@ builder.Services.AddScoped<IRequestHandler<EditarTarefaCommand, ValidationResult
 builder.Services.AddScoped<IRequestHandler<RemoverTarefaCommand, ValidationResult>, TarefaCommandHandler>();
 
 builder.Services.AddScoped<IRequestHandler<AdicionarSubTarefaCommand, ValidationResult>, SubTarefaCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<EditarSubTarefaCommand, ValidationResult>, SubTarefaCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<RemoverSubTarefaCommand, ValidationResult>, SubTarefaCommandHandler>();
 
 
 builder.Services.AddScoped<INotificationHandler<AdicionarTarefaEvent>, TarefaEventHandler>();
@@ -48,6 +50,8 @@ builder.Services.AddScoped<INotificationHandler<EditarTarefaEvent>, TarefaEventH
 builder.Services.AddScoped<INotificationHandler<RemoverTarefaEvent>, TarefaEventHandler>();
 
 builder.Services.AddScoped<INotificationHandler<AdicionarSubTarefaEvent>, SubTarefaEventHandler>();
+builder.Services.AddScoped<INotificationHandler<EditarSubTarefaEvent>, SubTarefaEventHandler>();
+builder.Services.AddScoped<INotificationHandler<RemoverSubTarefaEvent>, SubTarefaEventHandler>();
 
 builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
 builder.Services.AddScoped<ISubTarefaRepository, SubTarefaRepository>();
@@ -75,6 +79,8 @@ builder.Services.AddTransient<RabbitMqSender<EditarTarefaEvent>>();
 builder.Services.AddTransient<RabbitMqSender<RemoverTarefaEvent>>();
 
 builder.Services.AddTransient<RabbitMqSender<AdicionarSubTarefaEvent>>();
+builder.Services.AddTransient<RabbitMqSender<EditarSubTarefaEvent>>();
+builder.Services.AddTransient<RabbitMqSender<RemoverSubTarefaEvent>>();
 
 builder.Services.AddTransient<IFilaRabbit, TarefaFila>();
 builder.Services.AddTransient<IFilaRabbit, SubTarefaFila>();

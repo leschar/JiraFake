@@ -30,6 +30,7 @@ namespace JiraFake.Api.Controllers
         // GET: api/<Tarefa>        
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
@@ -51,7 +52,7 @@ namespace JiraFake.Api.Controllers
         // GET api/<Tarefa>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -69,7 +70,7 @@ namespace JiraFake.Api.Controllers
         // GET api/<detalhes>/5
         [HttpGet("detalhes/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Detalhes(Guid id)
         {
@@ -90,6 +91,8 @@ namespace JiraFake.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
         public async Task<IActionResult> Post([FromBody] AdicionarTarefaViewModel model)
         {
             _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
@@ -109,14 +112,17 @@ namespace JiraFake.Api.Controllers
         // PUT api/<Tarefa>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
         [SwaggerOperation(Summary = "Valores que representam o status,  Fechado = 0,\r\n        Aberto = 1,\r\n        ParaFazer = 2,\r\n        EmProgresso = 3,\r\n        EmTestes = 4,\r\n        TestesFinalizados = 5,\r\n        Concluido = 6 ")]
         public async Task<IActionResult> Put([FromBody] EditarTarefaViewModel model)
         {
             _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
             try
             {
-                return Ok(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
+                return CustomResponse(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
             }
             catch (Exception ex)
             {
@@ -129,8 +135,11 @@ namespace JiraFake.Api.Controllers
 
         // Delete api/<Tarefa>/5
         [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

@@ -3,7 +3,6 @@ using JiraFake.Domain.Commands.Tarefa;
 using JiraFake.Domain.Enum;
 using JiraFake.Domain.Models;
 using JiraFake.Domain.Utils;
-using System.Linq;
 
 namespace JiraFake.Application.Adapters
 {
