@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Tarefa } from '../tarefa';
-import { TarefaService } from '../../tarefa.service';
+import { TarefaService } from '../tarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { catchError, EMPTY } from 'rxjs';

@@ -4,7 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Tarefa } from '../tarefa';
 import { EMPTY, catchError } from 'rxjs';
-import { TarefaService } from '../../tarefa.service';
+import { TarefaService } from '../tarefa.service';
 
 @Component({
   selector: 'app-remover-tarefa',

@@ -7,9 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TarefaService } from '../../tarefa.service';
+import { TarefaService } from '../tarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Tarefa } from '../tarefa';
 
 @Component({
@@ -53,7 +52,7 @@ export class EditarTarefaComponent {
     if (this.form.valid) {
       this.tarefaService.update(this.form.value).subscribe(
         (res: any) => {
-          alert('Tarefa criada com sucesso!');
+          alert('Edição feita com sucesso!');
           this.router.navigateByUrl('/tarefa/index');
         },
         (error) => {

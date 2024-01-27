@@ -4,7 +4,12 @@
     <a href="" [routerLink]="['/tarefa/', tarefaId, 'detalhes']" class="btn btn-dark mb-3">Voltar</a>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
-
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
         <div class="form-group">
             <input type="hidden"  id="{{tarefaId}}" formControlName="tarefaId" class="form-control" [(ngModel)]="tarefaId" readonly>
           </div>

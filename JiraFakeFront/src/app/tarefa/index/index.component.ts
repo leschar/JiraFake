@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TarefaService } from '../../tarefa.service';
+import { TarefaService } from '../tarefa.service';
 import { Tarefa } from '../tarefa';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

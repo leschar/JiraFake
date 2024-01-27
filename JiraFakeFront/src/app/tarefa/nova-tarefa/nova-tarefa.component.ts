@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TarefaService } from '../../tarefa.service';
+import { TarefaService } from '../tarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({

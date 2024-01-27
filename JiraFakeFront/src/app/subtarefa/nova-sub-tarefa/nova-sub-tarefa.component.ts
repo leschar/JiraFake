@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { SubTarefaService } from '../../subtarefa.service';
+import { SubTarefaService } from '../subtarefa.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,6 +23,7 @@ export class NovaSubTarefaComponent {
   nome!: string;
   nomeTarefa!: string;
   descricao!: string;
+  errors: any[] = [];
 
   constructor(
     public postService: SubTarefaService,
@@ -47,13 +48,26 @@ export class NovaSubTarefaComponent {
 
   submit() {
     if (this.form.valid) {
-      this.postService.create(this.form.value).subscribe((res: any) => {
-        alert('Sub Tarefa criada com sucesso!');
-        this.nome = '';
-        this.descricao = '';
-        this.formulario['nome'].markAsUntouched();
-        this.formulario['descricao'].markAsUntouched();
-      });
+      this.postService.create(this.form.value).subscribe(
+        (res: any) => {
+          alert('Sub Tarefa criada com sucesso!');
+          this.nome = '';
+          this.descricao = '';
+          this.formulario['nome'].markAsUntouched();
+          this.formulario['descricao'].markAsUntouched();
+        },
+        (error) => {
+          if (error && Array.isArray(error)) {
+            this.errors = error;
+          } else if (error && error.errors) {
+            this.errors = error.errors;
+          } else {
+            this.errors = [
+              'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+            ];
+          }
+        }
+      );
     }
   }
 }

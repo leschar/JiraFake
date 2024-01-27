@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
-import { SubTarefaService } from '../../subtarefa.service';
+import { SubTarefaService } from '../subtarefa.service';
 import { SubTarefa } from '../../tarefa/tarefa';
 
 @Component({
@@ -18,6 +18,7 @@ export class RemoverSubTarefaComponent {
   tarefaId!: string | null;
   subTarefa!: SubTarefa;
   form!: FormGroup;
+  errors: any[] = [];
 
   constructor(
     public subTarefaService: SubTarefaService,
@@ -48,11 +49,23 @@ export class RemoverSubTarefaComponent {
   }
 
   submit() {
-    this.subTarefaService.delete(this.id).subscribe((res: any) => {
-      //abrir caixa de texto para motivo do cancelamento
-      alert('Excluido com sucesso');
-
-      this.router.navigateByUrl(`tarefa/${this.tarefaId}/detalhes`);
-    });
+    this.subTarefaService.delete(this.id).subscribe(
+      (res: any) => {
+        //abrir caixa de texto para motivo do cancelamento
+        alert('Excluido com sucesso');
+        this.router.navigateByUrl(`tarefa/${this.tarefaId}/detalhes`);
+      },
+      (error) => {
+        if (error && Array.isArray(error)) {
+          this.errors = error;
+        } else if (error && error.errors) {
+          this.errors = error.errors;
+        } else {
+          this.errors = [
+            'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+          ];
+        }
+      }
+    );
   }
 }

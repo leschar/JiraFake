@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SubTarefaService } from '../../subtarefa.service';
+import { SubTarefaService } from '../subtarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -24,6 +24,8 @@ export class EditarSubTarefaComponent {
   tarefaId!: string;
   subTarefa!: SubTarefa;
   form!: FormGroup;
+  errors: any[] = [];
+
   constructor(
     public subTarefaService: SubTarefaService,
     private router: Router,
@@ -57,12 +59,14 @@ export class EditarSubTarefaComponent {
         this.router.navigateByUrl(`tarefa/${this.tarefaId}/detalhes`);
       },
       (error) => {
-        console.error('Erro na requisição:', error);
-
-        if (error instanceof HttpErrorResponse) {
-          console.error('Status:', error.status);
-          console.error('Mensagem:', error.statusText);
-          console.error('Detalhes do erro:', error.error);
+        if (error && Array.isArray(error)) {
+          this.errors = error;
+        } else if (error && error.errors) {
+          this.errors = error.errors;
+        } else {
+          this.errors = [
+            'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+          ];
         }
       }
     );
