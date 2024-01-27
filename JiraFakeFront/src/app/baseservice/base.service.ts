@@ -55,7 +55,7 @@ export abstract class BaseService<T> {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  protected handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
     } else if (error?.error && error?.error?.errors) {
       return throwError(error?.error?.errors);
