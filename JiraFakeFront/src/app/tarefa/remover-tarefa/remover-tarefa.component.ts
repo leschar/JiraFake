@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TarefaService } from '../../tarefa.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Tarefa } from '../tarefa';
 import { EMPTY, catchError } from 'rxjs';
+import { TarefaService } from '../../tarefa.service';
 
 @Component({
   selector: 'app-remover-tarefa',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
   templateUrl: './remover-tarefa.component.html',
 })
 export class RemoverTarefaComponent {
   id!: string;
   tarefa!: Tarefa;
   form!: FormGroup;
+  errors: any[] = [];
 
   constructor(
     public tarefaService: TarefaService,
@@ -43,10 +44,22 @@ export class RemoverTarefaComponent {
   }
 
   submit() {
-    this.tarefaService.delete(this.id).subscribe((res: any) => {
-      console.log(res);
-      alert('Excluido com sucesso');
-      this.router.navigateByUrl('tarefa/index');
-    });
+    this.tarefaService.delete(this.id).subscribe(
+      (res: any) => {
+        alert('Excluido com sucesso');
+        this.router.navigateByUrl('/tarefa/index');
+      },
+      (error) => {
+        if (error && Array.isArray(error)) {
+          this.errors = error;
+        } else if (error && error.errors) {
+          this.errors = error.errors;
+        } else {
+          this.errors = [
+            'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+          ];
+        }
+      }
+    );
   }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace JiraFake.Api.Controllers
 {
     [ApiController]
-    public abstract class MainController : Controller
+    public abstract class MainController : ControllerBase
     {
         protected ICollection<string> Erros = new List<string>();
 
@@ -19,10 +19,8 @@ namespace JiraFake.Api.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
-            {
-                { "Mensagens", Erros.ToArray() }
-            }));
+            return BadRequest(new { errors = Erros.ToArray() });
+
         }
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)

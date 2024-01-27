@@ -18,6 +18,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class NovaTarefaComponent {
   form!: FormGroup;
+  errors: any[] = [];
 
   constructor(
     public postService: TarefaService,
@@ -37,9 +38,24 @@ export class NovaTarefaComponent {
   }
 
   submit() {
-    this.postService.create(this.form.value).subscribe((res: any) => {
-      alert('Tarefa criada com sucesso!');
-      this.router.navigateByUrl('tarefa/index');
-    });
+    if (this.form.valid) {
+      this.postService.create(this.form.value).subscribe(
+        (res: any) => {
+          alert('Tarefa criada com sucesso!');
+          this.router.navigateByUrl('/tarefa/index');
+        },
+        (error) => {
+          if (error && Array.isArray(error)) {
+            this.errors = error;
+          } else if (error && error.errors) {
+            this.errors = error.errors;
+          } else {
+            this.errors = [
+              'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+            ];
+          }
+        }
+      );
+    }
   }
 }

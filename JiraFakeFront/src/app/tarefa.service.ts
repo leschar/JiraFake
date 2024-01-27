@@ -21,47 +21,48 @@ export class TarefaService {
 
   //get
   getAll(): Observable<any> {
-    return this.httpClient.get(this.apiUrl + 'tarefa/').pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(error);
-      })
-    );
+    return this.httpClient
+      .get(this.apiUrl + 'tarefa/')
+      .pipe(catchError(this.handleError));
   }
   //find data
   find(id: string): Observable<any> {
-    return this.httpClient.get(this.apiUrl + 'tarefa/detalhes/' + id).pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(error);
-      })
-    );
+    return this.httpClient
+      .get(this.apiUrl + 'tarefa/detalhes/' + id)
+      .pipe(catchError(this.handleError));
   }
   //create
   create(post: Tarefa): Observable<any> {
     return this.httpClient
       .post(this.apiUrl + 'tarefa/', JSON.stringify(post), this.httpOptions)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(error);
-        })
-      );
+      .pipe(catchError(this.handleError));
   }
+
   //edit
   update(tarefa: Tarefa): Observable<any> {
     return this.httpClient
       .put(this.apiUrl + 'tarefa/', JSON.stringify(tarefa), this.httpOptions)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(error);
-        })
-      );
+      .pipe(catchError(this.handleError));
   }
 
   //delete
-  delete(id: string) {
-    return this.httpClient.delete(this.apiUrl + 'tarefa?id=' + id).pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(error);
-      })
+  delete(id: string): Observable<any> {
+    return this.httpClient
+      .delete(this.apiUrl + 'tarefa?id=' + id)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+    } else if (error?.error && error?.error?.errors) {
+      return throwError(error?.error?.errors);
+    } else {
+      console.error(
+        `Código do erro: ${error.status}, ` + `mensagem: ${error.error.message}`
+      );
+    }
+    return throwError(
+      'Ocorreu um erro. Por favor, tente novamente mais tarde.'
     );
   }
 }

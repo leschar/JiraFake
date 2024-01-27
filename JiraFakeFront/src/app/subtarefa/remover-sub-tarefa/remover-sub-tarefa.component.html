@@ -1,1 +1,22 @@
-<p>remover-sub-tarefa works!</p>
+<div class="container" *ngIf="subTarefa" style="margin-top: 100px; margin-bottom: 100px;">
+  <a href="" [routerLink]="['/tarefa/', tarefaId, 'detalhes']" class="btn btn-dark mb-3">Voltar</a>
+    
+    <h1 class="text-center">Tem certeza que deseja excluir a Sub Tarefa?</h1>
+     
+      <div class="form-group">
+        <input type="hidden"  id="{{id}}"  class="form-control" [(ngModel)]="id" readonly>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Sub Tarefa: {{subTarefa.nome}}</h2>
+            <p class="card-text"><strong>Descrição:</strong> {{subTarefa.descricao}}</p>
+            <p class="card-text"><strong>Data de Cadastro:</strong> {{subTarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</p>
+            <p class="card-text"><strong>Status:</strong> {{subTarefa.status}}</p>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="button" class="btn btn-danger" (click)="submit()">Excluir</button>
+      </div>
+      
+  </div>

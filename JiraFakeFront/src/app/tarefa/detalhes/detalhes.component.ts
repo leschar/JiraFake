@@ -4,7 +4,6 @@ import { TarefaService } from '../../tarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { catchError, EMPTY } from 'rxjs';
-
 @Component({
   selector: 'app-detalhes',
   standalone: true,

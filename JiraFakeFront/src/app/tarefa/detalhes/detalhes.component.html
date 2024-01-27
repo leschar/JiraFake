@@ -18,15 +18,18 @@
           <p class="card-text"><strong>Status:</strong> {{tarefa.status}}</p>
       </div>
   </div>
+
+
   <div class="container mt-4">
       <h2>Sub Tarefas</h2>
       <table class="table table-striped">
-          <thead>
+          <thead class="thead-dark">
               <tr>
                   <th>Nome</th>
                   <th>Descrição</th>
                   <th>Status</th>
                   <th>Data de Cadastro</th>
+                  <th width="250px">Ação</th>
               </tr>
           </thead>
           <tbody>
@@ -35,6 +38,11 @@
                   <td>{{subTarefa.descricao}}</td>
                   <td>{{subTarefa.status}}</td>
                   <td>{{subTarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</td>
+                  <td>
+                    <a href="#" [routerLink]="['/subtarefa/', subTarefa.id, 'editar-sub-tarefa', { tarefaId: tarefa.id}]" class="btn btn-success">Editar</a>
+                    <a href="#" [routerLink]="['/subtarefa/', subTarefa.id, 'remover-sub-tarefa', { tarefaId: tarefa.id}]" class="btn btn-danger">Excluir</a>
+
+                </td>
               </tr>
           </tbody>
       </table>

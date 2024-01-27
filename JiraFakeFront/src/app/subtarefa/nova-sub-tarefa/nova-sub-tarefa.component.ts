@@ -46,9 +46,14 @@ export class NovaSubTarefaComponent {
   }
 
   submit() {
-    console.log('----------', this.form.value);
-    this.postService.create(this.form.value).subscribe((res: any) => {
-      alert('Sub Tarefa criada com sucesso!');
-    });
+    if (this.form.valid) {
+      this.postService.create(this.form.value).subscribe((res: any) => {
+        alert('Sub Tarefa criada com sucesso!');
+        this.nome = '';
+        this.descricao = '';
+        this.formulario['nome'].markAsUntouched();
+        this.formulario['descricao'].markAsUntouched();
+      });
+    }
   }
 }

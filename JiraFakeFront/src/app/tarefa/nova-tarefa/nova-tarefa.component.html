@@ -2,26 +2,34 @@
     <h1 class="text-center">Nova Tarefa</h1>
     <a href=""  routerLink="/tarefa/index" class="btn btn-dark mb-3">Voltar</a>
 
+    
+
     <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
 
     <div class="form-group" >
         <label for="nome">Nome</label>
-        <input type="text" id="nome" formControlName="nome" class="form-control">
-        <div *ngIf="formulario['nome'].touched && formulario['nome'].invalid" class="alert alert-danger">
+        <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Nome é obrigatório">
+        <div *ngIf="formulario['nome'].touched && formulario['nome'].invalid" class="text-danger">
             <div *ngIf="formulario['nome'].errors && formulario['nome'].errors['required']" >Nome é obrigatório</div>
         </div>
 
     </div>
     <div class="form-group mt-3">
         <label for="Descricao">Descrição</label>
-        <input type="text" id="descricao" formControlName="descricao" class="form-control">
-        <div *ngIf="formulario['descricao'].touched && formulario['descricao'].invalid" class="alert alert-danger">
-            <div *ngIf="formulario['descricao'].errors && formulario['descricao'].errors['required']" >descricao é obrigatório</div>
+        <textarea  id="descricao" formControlName="descricao" class="form-control" placeholder="Descrição é obrigatório"></textarea>
+        <div *ngIf="formulario['descricao'].touched && formulario['descricao'].invalid" class="text-danger">
+            <div *ngIf="formulario['descricao'].errors && formulario['descricao'].errors['required']" >Descricao é obrigatório</div>
         </div>    
     </div>
 
     <button class="btn btn-info mt-3" type="submit" [disabled]="!form.valid">Salvar</button>
 
     </form>
-</div>
+</div> 
 

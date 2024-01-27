@@ -21,9 +21,13 @@ export const routes: Routes = [
   },
 
   { path: 'subtarefa/nova-sub-tarefa', component: NovaSubTarefaComponent },
-  { path: 'subtarefa/editar-sub-tarefa', component: EditarSubTarefaComponent },
+
   {
-    path: 'subtarefa/remover-sub-tarefa',
+    path: 'subtarefa/:subTarefaId/editar-sub-tarefa',
+    component: EditarSubTarefaComponent,
+  },
+  {
+    path: 'subtarefa/:subTarefaId/remover-sub-tarefa',
     component: RemoverSubTarefaComponent,
   },
 

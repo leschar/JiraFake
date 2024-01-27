@@ -6,6 +6,8 @@ namespace JiraFake.Application.ViewModels
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }
+        [JsonPropertyName("tarefaId")]
+        public Guid TarefaId { get; set; }
         [JsonPropertyName("nome")]
         public string Nome { get; set; }
         [JsonPropertyName("descricao")]

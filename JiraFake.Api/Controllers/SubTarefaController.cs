@@ -1,6 +1,7 @@
 ﻿using JiraFake.Application.Adapters;
 using JiraFake.Application.ViewModels;
 using JiraFake.Domain.Commands.Tarefa;
+using JiraFake.Domain.Interfaces.Models;
 using JiraFake.Domain.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -16,13 +17,33 @@ namespace JiraFake.Api.Controllers
     {
         private readonly IMediatorHandler _mediator;
         private readonly ILogger<SubTarefaController> _logger;
+        private readonly ISubTarefaRepository _repository;
 
-        public SubTarefaController(IMediatorHandler mediatorHandler, ILogger<SubTarefaController> logger)
+        public SubTarefaController(IMediatorHandler mediatorHandler, ILogger<SubTarefaController> logger, ISubTarefaRepository repository)
         {
             _mediator = mediatorHandler;
             _logger = logger;
+            _repository = repository;
         }
 
+
+        // GET api/<subtarefa>/5
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            try
+            {
+                return CustomResponse(SubTarefaModelAdapter.ConvertToView(await _repository.GetById(id)));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"A aplicação gerou um erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensagem = "Erro interno ao obter tarefas" });
+            }
+        }
         // POST api/<SubTarefa>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -78,11 +99,11 @@ namespace JiraFake.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Consumes("application/json")]
-        public async Task<IActionResult> Delete(Guid id, Guid tarefaId)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                var command = new RemoverSubTarefaCommand(id, tarefaId);
+                var command = new RemoverSubTarefaCommand(id);
                 return CustomResponse(await _mediator.EnviarComando(command));
             }
             catch (Exception ex)

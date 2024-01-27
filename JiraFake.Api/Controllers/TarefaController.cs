@@ -89,17 +89,17 @@ namespace JiraFake.Api.Controllers
 
         // POST api/<Tarefa>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Consumes("application/json")]
-        public async Task<IActionResult> Post([FromBody] AdicionarTarefaViewModel model)
-        {
+        public async Task<ActionResult<AdicionarTarefaViewModel>> Post([FromBody] AdicionarTarefaViewModel model)
+            {
             _logger.LogInformation($"Model recebida : {JsonSerializer.Serialize(model)}");
             try
             {
-                await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model));
-                return StatusCode(StatusCodes.Status201Created);
+                if (!ModelState.IsValid) return CustomResponse(ModelState);
+                return CustomResponse(await _mediator.EnviarComando(TarefaModelAdapter.ConvertToDomain(model)));
             }
             catch (Exception ex)
             {

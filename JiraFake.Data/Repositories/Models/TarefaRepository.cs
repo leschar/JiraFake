@@ -12,7 +12,7 @@ namespace JiraFake.Data.Repositories.Models
         public async Task<Tarefa> ObterTarefasPorId(Guid id)
         {
             return await _context.Tarefas
-                .Include(x => x.SubTarefas)
+                .Include(x => x.SubTarefas.Where(s => s.Ativo))
                 .FirstOrDefaultAsync(t => t.Id == id && t.Ativo);
         }
 

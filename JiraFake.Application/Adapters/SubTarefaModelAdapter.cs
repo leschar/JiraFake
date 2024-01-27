@@ -39,6 +39,7 @@ namespace JiraFake.Application.Adapters
         {
             ResponseSubTarefaViewModel response = new();
             response.Id = model.Id;
+            response.TarefaId = model.TarefaId;
             response.Nome = model.Nome;
             response.Descricao = model.Descricao;
             response.DataCadastro = model.DataCadastro;

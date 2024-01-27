@@ -5,10 +5,9 @@ namespace JiraFake.Domain.Commands.Tarefa
 {
     public class RemoverSubTarefaCommand : Command
     {
-        public RemoverSubTarefaCommand(Guid id, Guid tarefaId)
+        public RemoverSubTarefaCommand(Guid id)
         {
             Id = id;
-            TarefaId = tarefaId;
         }
 
         public Guid Id { get; set; }
@@ -16,10 +15,6 @@ namespace JiraFake.Domain.Commands.Tarefa
         public bool TarefaExiste { get; set; }
         public bool SubTarefaExiste { get; set; }
 
-        public void ValidarTarefa(bool valido)
-        {
-            TarefaExiste = valido;
-        }
         public void ValidarSubTarefa(bool valido)
         {
             SubTarefaExiste = valido;
@@ -35,11 +30,6 @@ namespace JiraFake.Domain.Commands.Tarefa
     {
         public RemoverSubTarefaValidation()
         {
-            RuleFor(x => x.TarefaExiste)
-               .NotNull()
-               .NotEmpty()
-               .WithMessage("Tarefa não existe.");
-
             RuleFor(x => x.SubTarefaExiste)
                .NotNull()
                .NotEmpty()

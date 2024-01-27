@@ -19,6 +19,15 @@ export class SubTarefaService {
 
   constructor(private httpClient: HttpClient) {}
 
+  //find data
+  find(id: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + 'subtarefa/' + id).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
+  }
+
   //create
   create(post: SubTarefa): Observable<any> {
     return this.httpClient
@@ -42,13 +51,11 @@ export class SubTarefaService {
   }
 
   //delete
-  delete(id: string, tarefaId: string) {
-    return this.httpClient
-      .delete(this.apiUrl + 'subtarefa?id=' + id + '&tarefaId=' + tarefaId)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(error);
-        })
-      );
+  delete(id: string) {
+    return this.httpClient.delete(this.apiUrl + 'subtarefa?id=' + id).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
   }
 }

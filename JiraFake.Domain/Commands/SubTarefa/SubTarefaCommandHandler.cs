@@ -58,9 +58,6 @@ namespace JiraFake.Domain.Commands.SubSubTarefa
         }
         public async Task<ValidationResult> Handle(RemoverSubTarefaCommand request, CancellationToken cancellationToken)
         {
-            var existeTarefa = await _repositoryTarefa.GetById(request.TarefaId);
-            request.ValidarTarefa(existeTarefa is not null);
-
             var existeSubTarefa = await _repository.Find(c => c.Ativo && c.Id == request.Id && c.TarefaId == request.TarefaId);
             request.ValidarSubTarefa(existeSubTarefa.Any());
 
@@ -72,7 +69,7 @@ namespace JiraFake.Domain.Commands.SubSubTarefa
 
             await _repository.DesativarSubTarefa(request.Id);
 
-            subTarefa.AdicionarEvento(new RemoverSubTarefaEvent(subTarefa.Id, subTarefa.Ativo, subTarefa.TarefaId));
+            subTarefa.AdicionarEvento(new RemoverSubTarefaEvent(subTarefa.Id, subTarefa.Ativo));
 
             return await PersistirDados(_repository.UnitOfWork);
         }
