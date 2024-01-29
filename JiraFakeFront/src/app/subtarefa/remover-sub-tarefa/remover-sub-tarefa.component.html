@@ -18,7 +18,7 @@
             <h2 class="card-title">Sub Tarefa: {{subTarefa.nome}}</h2>
             <p class="card-text"><strong>Descrição:</strong> {{subTarefa.descricao}}</p>
             <p class="card-text"><strong>Data de Cadastro:</strong> {{subTarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</p>
-            <p class="card-text"><strong>Status:</strong> {{subTarefa.status}}</p>
+            <p class="card-text"><strong>Status:</strong> {{subTarefa.status | async}}</p>
         </div>
       </div>
       <div class="mt-4">

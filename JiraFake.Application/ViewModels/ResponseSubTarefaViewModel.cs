@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using JiraFake.Domain.Enum;
+using System.Text.Json.Serialization;
 
 namespace JiraFake.Application.ViewModels
 {
@@ -15,6 +16,6 @@ namespace JiraFake.Application.ViewModels
         [JsonPropertyName("dataCadastro")]
         public DateTime DataCadastro { get; set; }
         [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public StatusEnum Status { get; set; }
     }
 }

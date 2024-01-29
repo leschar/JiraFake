@@ -4,6 +4,7 @@ import { TarefaService } from '../tarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { catchError, EMPTY } from 'rxjs';
+import { BaseService } from '../../baseservice/base.service';
 @Component({
   selector: 'app-detalhes',
   standalone: true,
@@ -36,7 +37,10 @@ export class DetalhesComponent {
         })
       )
       .subscribe((data: Tarefa) => {
-        this.tarefa = data;
+        this.tarefa = {
+          ...data,
+          status: this.tarefaService.getStatusLabelById(data.status),
+        };
       });
   }
 }

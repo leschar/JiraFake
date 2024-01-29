@@ -11,18 +11,20 @@
                 <th width="250px">Ação</th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let tarefa of tarefas">
-                <td>{{tarefa.nome}}</td>
-                <td>{{tarefa.descricao}}</td>
-                <td>{{tarefa.status}}</td>
-                <td>{{tarefa.dataCadastro |date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>
-                    <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'editar-tarefa']" class="btn btn-success">Editar</a>
-                    <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'detalhes']" class="btn btn-secondary">Detalhes</a>
-                    <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'remover-tarefa']" class="btn btn-danger">Excluir</a>
-                </td>
-            </tr>
+        <tbody> 
+            <ng-container *ngFor="let tarefa of tarefas; let i = index">                
+                <tr>
+                    <td>{{tarefa.nome}}</td>
+                    <td>{{tarefa.descricao}}</td>
+                    <td>{{ tarefa.status | async }}</td>
+                    <td>{{tarefa.dataCadastro | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>
+                        <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'editar-tarefa']" class="btn btn-success">Editar</a>
+                        <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'detalhes']" class="btn btn-secondary">Detalhes</a>
+                        <a href="#" [routerLink]="['/tarefa/', tarefa.id, 'remover-tarefa']" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>

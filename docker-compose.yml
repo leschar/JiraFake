@@ -1,21 +1,11 @@
 version: '3.9'
 
 services:
-  sql-server:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sql-server-container
-    environment:
-      SA_PASSWORD: "Teste@123"
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Express"
-    ports:
-      - "1433:1433"
-    networks:
-      - backend
 
-  rabbitmq:
+  rabbit:
     image: "rabbitmq:management"
-    container_name: rabbitmq-container
+    hostname: rabbit
+    container_name: rabbit
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -25,16 +15,28 @@ services:
     networks:
       - backend
 
-  jirafaker:
-    image: jirafaker:latest
-    container_name: jirafake-container
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqldata
+    environment:
+      SA_PASSWORD: "Teste@1954"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
     ports:
-      - "8081:80"
+      - "1450:1433"
+    networks:
+      - backend
+
+  jirafake:
+    image: jirafake:latest
+    container_name: jirafake
+    ports:
+      - 8081:80
     networks:
       - backend
     depends_on:
-      - sql-server
-      - rabbitmq
+      - sqldata
+      - rabbit
 
 networks:
   backend:

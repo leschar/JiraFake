@@ -4,7 +4,7 @@ import { Tarefa } from '../tarefa';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-index',
@@ -15,6 +15,7 @@ import { EMPTY } from 'rxjs';
 })
 export class IndexComponent {
   tarefas: Tarefa[] = [];
+
   constructor(public tarefaService: TarefaService) {}
 
   ngOnInit(): void {
@@ -35,7 +36,10 @@ export class IndexComponent {
         })
       )
       .subscribe((data: Tarefa[]) => {
-        this.tarefas = data;
+        this.tarefas = data.map((tarefa) => ({
+          ...tarefa,
+          status: this.tarefaService.getStatusLabelById(tarefa.status),
+        }));
       });
   }
 }

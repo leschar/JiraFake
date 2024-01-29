@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { EMPTY, Observable, catchError, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -49,13 +49,13 @@ export abstract class BaseService<T> {
   }
 
   //delete
-  delete(id: string): Observable<any> {
+  delete(id: string, contexto?: any): Observable<any> {
     return this.httpClient
       .delete(`${this.apiUrl}${this.getResourceUrl()}?id=${id}`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((error) => this.handleError(error, contexto)));
   }
 
-  protected handleError(error: HttpErrorResponse) {
+  protected handleError(error: HttpErrorResponse, contexto?: any) {
     if (error.error instanceof ErrorEvent) {
     } else if (error?.error && error?.error?.errors) {
       return throwError(error?.error?.errors);
@@ -67,5 +67,22 @@ export abstract class BaseService<T> {
     return throwError(
       'Ocorreu um erro. Por favor, tente novamente mais tarde.'
     );
+  }
+
+  getStatusLabelById(statusId: number): Observable<string> {
+    const statusOptions = [
+      { id: 0, label: 'Fechado' },
+      { id: 1, label: 'Aberto' },
+      { id: 2, label: 'Para Fazer' },
+      { id: 3, label: 'Em Progresso' },
+      { id: 4, label: 'Em Testes' },
+      { id: 5, label: 'Testes Finalizados' },
+      { id: 6, label: 'Concluído' },
+    ];
+
+    const matchingStatus = statusOptions.find(
+      (option) => option.id === statusId
+    );
+    return matchingStatus ? of(matchingStatus.label) : EMPTY;
   }
 }

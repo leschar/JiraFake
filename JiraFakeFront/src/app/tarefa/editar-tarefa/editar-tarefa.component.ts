@@ -24,6 +24,16 @@ export class EditarTarefaComponent {
   form!: FormGroup;
   errors: any[] = [];
 
+  statusOptions = [
+    { id: 0, label: 'Fechado' },
+    { id: 1, label: 'Aberto' },
+    { id: 2, label: 'Para Fazer' },
+    { id: 3, label: 'Em Progresso' },
+    { id: 4, label: 'Em Testes' },
+    { id: 5, label: 'Testes Finalizados' },
+    { id: 6, label: 'Concluído' },
+  ];
+
   constructor(
     public tarefaService: TarefaService,
     private router: Router,
@@ -34,13 +44,15 @@ export class EditarTarefaComponent {
     this.id = this.route.snapshot.params['tarefaId'];
     this.tarefaService.find(this.id).subscribe((data: Tarefa) => {
       this.tarefa = data;
-      this.form.get('nome')?.setValue(this.tarefa.nome);
-      this.form.get('descricao')?.setValue(this.tarefa.descricao);
-    });
-    this.form = new FormGroup({
-      id: new FormControl(''),
-      nome: new FormControl('', [Validators.required]),
-      descricao: new FormControl('', Validators.required),
+      const statusValue = this.tarefa.status;
+      this.form = new FormGroup({
+        id: new FormControl(this.tarefa.id),
+        nome: new FormControl(this.tarefa.nome, [Validators.required]),
+        descricao: new FormControl(this.tarefa.descricao, Validators.required),
+        status: new FormControl(this.tarefa.status, Validators.required),
+      });
+
+      this.form.get('status')?.setValue(statusValue);
     });
   }
 

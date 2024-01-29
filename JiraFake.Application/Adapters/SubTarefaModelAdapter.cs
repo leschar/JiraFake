@@ -16,7 +16,7 @@ namespace JiraFake.Application.Adapters
 
         public static EditarSubTarefaCommand ConvertToDomain(EditarSubTarefaViewModel model)
         {
-            return new EditarSubTarefaCommand(model.Id,model.TarefaId, model.Nome, model.Descricao, model.Status);
+            return new EditarSubTarefaCommand(model.Id, model.TarefaId, model.Nome, model.Descricao, model.Status);
         }
         public static IEnumerable<ResponseSubTarefaViewModel> ConvertToView(IEnumerable<SubTarefa> model)
         {
@@ -29,7 +29,7 @@ namespace JiraFake.Application.Adapters
                 response.Nome = tarefa.Nome;
                 response.Descricao = tarefa.Descricao;
                 response.DataCadastro = tarefa.DataCadastro;
-                response.Status = EnumUtils.ObterDescricaoEnum(tarefa.Status);
+                response.Status = tarefa.Status;
                 tarefas.Add(response);
             }
             return tarefas;
@@ -43,7 +43,7 @@ namespace JiraFake.Application.Adapters
             response.Nome = model.Nome;
             response.Descricao = model.Descricao;
             response.DataCadastro = model.DataCadastro;
-            response.Status = EnumUtils.ObterDescricaoEnum(model.Status);
+            response.Status = model.Status;
 
             return response;
         }

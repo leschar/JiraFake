@@ -19,12 +19,23 @@ export class RemoverSubTarefaComponent {
   subTarefa!: SubTarefa;
   form!: FormGroup;
   errors: any[] = [];
+  statusOptions = [
+    { id: 0, label: 'Fechado' },
+    { id: 1, label: 'Aberto' },
+    { id: 2, label: 'Para Fazer' },
+    { id: 3, label: 'Em Progresso' },
+    { id: 4, label: 'Em Testes' },
+    { id: 5, label: 'Testes Finalizados' },
+    { id: 6, label: 'Concluído' },
+  ];
 
   constructor(
     public subTarefaService: SubTarefaService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.submit = this.submit.bind(this);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['subTarefaId'];
@@ -44,11 +55,15 @@ export class RemoverSubTarefaComponent {
         })
       )
       .subscribe((data: SubTarefa) => {
-        this.subTarefa = data;
+        this.subTarefa = {
+          ...data,
+          status: this.subTarefaService.getStatusLabelById(data.status),
+        };
       });
   }
 
   submit() {
+    debugger;
     this.subTarefaService.delete(this.id).subscribe(
       (res: any) => {
         //abrir caixa de texto para motivo do cancelamento

@@ -18,6 +18,9 @@ namespace JiraFake.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(500)");
 
+            builder.Property(t => t.Status)
+                .HasConversion<int>();
+
 
             builder.ToTable("SubTarefas");
 

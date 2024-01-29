@@ -19,7 +19,7 @@
           <h2 class="card-title">Tarefa: {{tarefa.nome}}</h2>
           <p class="card-text"><strong>Descrição:</strong> {{tarefa.descricao}}</p>
           <p class="card-text"><strong>Data de Cadastro:</strong> {{tarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</p>
-          <p class="card-text"><strong>Status:</strong> {{tarefa.status}}</p>
+          <p class="card-text"><strong>Status:</strong> {{ tarefa.status | async }}</p>
       </div>
     </div>
     <div class="mt-4">

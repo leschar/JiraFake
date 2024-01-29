@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using JiraFake.Api.Configuration;
 using JiraFake.Application.Worker;
 using JiraFake.Data.Context;
 using JiraFake.Data.Repositories.Models;
@@ -41,6 +42,8 @@ builder.Services.AddDbContext<JiraFakeContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
 
 builder.Services.AddScoped<IRequestHandler<AdicionarTarefaCommand, ValidationResult>, TarefaCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<EditarTarefaCommand, ValidationResult>, TarefaCommandHandler>();
@@ -115,11 +118,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.MigrationInitialisation();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

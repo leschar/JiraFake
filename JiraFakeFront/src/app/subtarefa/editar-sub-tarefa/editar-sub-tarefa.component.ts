@@ -10,7 +10,6 @@ import {
 } from '@angular/forms';
 import { SubTarefaService } from '../subtarefa.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-editar-sub-tarefa',
@@ -25,7 +24,15 @@ export class EditarSubTarefaComponent {
   subTarefa!: SubTarefa;
   form!: FormGroup;
   errors: any[] = [];
-
+  statusOptions = [
+    { id: 0, label: 'Fechado' },
+    { id: 1, label: 'Aberto' },
+    { id: 2, label: 'Para Fazer' },
+    { id: 3, label: 'Em Progresso' },
+    { id: 4, label: 'Em Testes' },
+    { id: 5, label: 'Testes Finalizados' },
+    { id: 6, label: 'Concluído' },
+  ];
   constructor(
     public subTarefaService: SubTarefaService,
     private router: Router,
@@ -38,37 +45,45 @@ export class EditarSubTarefaComponent {
 
     this.subTarefaService.find(this.id).subscribe((data: SubTarefa) => {
       this.subTarefa = data;
+      const statusValue = this.subTarefa.status;
       this.form.get('tarefaId')?.setValue(this.subTarefa.tarefaId);
       this.form.get('nome')?.setValue(this.subTarefa.nome);
       this.form.get('descricao')?.setValue(this.subTarefa.descricao);
+      this.form.get('status')?.setValue(statusValue);
+
+      this.form.get('status')?.setValue(statusValue);
     });
     this.form = new FormGroup({
       id: new FormControl(''),
       tarefaId: new FormControl(''),
       nome: new FormControl('', [Validators.required]),
       descricao: new FormControl('', [Validators.required]),
+      status: new FormControl('', Validators.required),
     });
   }
   get formulario() {
     return this.form.controls;
   }
+
   submit() {
-    this.subTarefaService.update(this.form.value).subscribe(
-      (res: any) => {
-        alert('Edição feita com sucesso.');
-        this.router.navigateByUrl(`tarefa/${this.tarefaId}/detalhes`);
-      },
-      (error) => {
-        if (error && Array.isArray(error)) {
-          this.errors = error;
-        } else if (error && error.errors) {
-          this.errors = error.errors;
-        } else {
-          this.errors = [
-            'Ocorreu um erro. Por favor, tente novamente mais tarde.',
-          ];
+    if (this.form.valid) {
+      this.subTarefaService.update(this.form.value).subscribe(
+        (res: any) => {
+          alert('Edição feita com sucesso.');
+          this.router.navigateByUrl(`tarefa/${this.tarefaId}/detalhes`);
+        },
+        (error) => {
+          if (error && Array.isArray(error)) {
+            this.errors = error;
+          } else if (error && error.errors) {
+            this.errors = error.errors;
+          } else {
+            this.errors = [
+              'Ocorreu um erro. Por favor, tente novamente mais tarde.',
+            ];
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

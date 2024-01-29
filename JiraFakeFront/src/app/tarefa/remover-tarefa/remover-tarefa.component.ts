@@ -17,12 +17,23 @@ export class RemoverTarefaComponent {
   tarefa!: Tarefa;
   form!: FormGroup;
   errors: any[] = [];
+  statusOptions = [
+    { id: 0, label: 'Fechado' },
+    { id: 1, label: 'Aberto' },
+    { id: 2, label: 'Para Fazer' },
+    { id: 3, label: 'Em Progresso' },
+    { id: 4, label: 'Em Testes' },
+    { id: 5, label: 'Testes Finalizados' },
+    { id: 6, label: 'Concluído' },
+  ];
 
   constructor(
     public tarefaService: TarefaService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.submit = this.submit.bind(this);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['tarefaId'];
@@ -39,7 +50,10 @@ export class RemoverTarefaComponent {
         })
       )
       .subscribe((data: Tarefa) => {
-        this.tarefa = data;
+        this.tarefa = {
+          ...data,
+          status: this.tarefaService.getStatusLabelById(data.status),
+        };
       });
   }
 

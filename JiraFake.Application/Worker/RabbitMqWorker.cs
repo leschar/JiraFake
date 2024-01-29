@@ -32,6 +32,8 @@ namespace JiraFake.Application.Worker
                     Uri = new Uri(_rabbitMqSettings.ConnectionString)
                 };
 
+                _logger.LogInformation(_rabbitMqSettings.ConnectionString);
+
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
 

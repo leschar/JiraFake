@@ -15,7 +15,7 @@
           <h2 class="card-title">Tarefa: {{tarefa.nome}}</h2>
           <p class="card-text"><strong>Descrição:</strong> {{tarefa.descricao}}</p>
           <p class="card-text"><strong>Data de Cadastro:</strong> {{tarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</p>
-          <p class="card-text"><strong>Status:</strong> {{tarefa.status}}</p>
+          <p class="card-text"><strong>Status:</strong> {{tarefa.status | async}}</p>
       </div>
   </div>
 
@@ -36,7 +36,7 @@
               <tr *ngFor="let subTarefa of tarefa.subTarefa">
                   <td>{{subTarefa.nome}}</td>
                   <td>{{subTarefa.descricao}}</td>
-                  <td>{{subTarefa.status}}</td>
+                  <td>{{tarefaService.getStatusLabelById(subTarefa.status) | async }}</td>
                   <td>{{subTarefa.dataCadastro|date:'dd/MM/yyyy HH:mm'}}</td>
                   <td>
                     <a href="#" [routerLink]="['/subtarefa/', subTarefa.id, 'editar-sub-tarefa', { tarefaId: tarefa.id}]" class="btn btn-success">Editar</a>
